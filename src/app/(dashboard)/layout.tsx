@@ -19,7 +19,7 @@ import HorizontalFooter from '@components/layout/horizontal/Footer'
 import ScrollToTop from '@core/components/scroll-to-top'
 
 // Util Imports
-import { getMode, getSystemMode } from '@core/utils/serverHelpers'
+import { getMode, getSystemMode, getSettingsFromCookie } from '@core/utils/serverHelpers'
 
 const Layout = async (props: ChildrenType) => {
   const { children } = props
@@ -28,9 +28,10 @@ const Layout = async (props: ChildrenType) => {
   const direction = 'ltr'
   const mode = await getMode()
   const systemMode = await getSystemMode()
+  const settingsCookie = await getSettingsFromCookie()
 
   return (
-    <Providers direction={direction}>
+    <Providers direction={direction} mode={mode} settingsCookie={settingsCookie} systemMode={systemMode}>
       <LayoutWrapper
         systemMode={systemMode}
         verticalLayout={

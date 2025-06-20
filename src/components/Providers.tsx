@@ -1,3 +1,5 @@
+'use client'
+
 // Type Imports
 import type { ChildrenType, Direction } from '@core/types'
 
@@ -6,21 +8,16 @@ import { VerticalNavProvider } from '@menu/contexts/verticalNavContext'
 import { SettingsProvider } from '@core/contexts/settingsContext'
 import ThemeProvider from '@components/theme'
 
-// Util Imports
-import { getMode, getSettingsFromCookie, getSystemMode } from '@core/utils/serverHelpers'
-
 type Props = ChildrenType & {
   direction: Direction
+  mode: string
+  settingsCookie: any
+  systemMode: string
 }
 
-const Providers = async (props: Props) => {
+const Providers = (props: Props) => {
   // Props
-  const { children, direction } = props
-
-  // Vars
-  const mode = await getMode()
-  const settingsCookie = await getSettingsFromCookie()
-  const systemMode = await getSystemMode()
+  const { children, direction, mode, settingsCookie, systemMode } = props
 
   return (
     <VerticalNavProvider>
