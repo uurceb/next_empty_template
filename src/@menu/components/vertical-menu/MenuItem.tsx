@@ -4,8 +4,8 @@
 import { forwardRef, useEffect, useState } from 'react'
 import type { AnchorHTMLAttributes, ForwardRefRenderFunction, ReactElement, ReactNode } from 'react'
 
-// Next Imports
-import { usePathname } from 'next/navigation'
+// React Router Imports
+import { useLocation } from 'react-router-dom'
 
 // Third-party Imports
 import classnames from 'classnames'
@@ -73,7 +73,8 @@ const MenuItem: ForwardRefRenderFunction<HTMLLIElement, MenuItemProps> = (props,
   const [active, setActive] = useState(false)
 
   // Hooks
-  const pathname = usePathname()
+  const location = useLocation()
+  const pathname = location.pathname
   const { menuItemStyles, renderExpandedMenuItemIcon, textTruncate } = useVerticalMenu()
 
   const { isCollapsed, isHovered, isPopoutWhenCollapsed, toggleVerticalNav, isToggled, isBreakpointReached } =

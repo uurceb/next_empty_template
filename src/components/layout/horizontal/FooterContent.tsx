@@ -1,7 +1,7 @@
 'use client'
 
-// Next Imports
-import Link from 'next/link'
+// React Router Imports
+import { Link } from 'react-router-dom'
 
 // Third-party Imports
 import classnames from 'classnames'
@@ -24,28 +24,29 @@ const FooterContent = () => {
         <span className='text-textSecondary'>{`© ${new Date().getFullYear()}, Made with `}</span>
         <span>{`❤️`}</span>
         <span className='text-textSecondary'>{` by `}</span>
-        <Link href='https://pixinvent.com/' target='_blank' className='text-primary uppercase'>
+        <a href='https://pixinvent.com/' target='_blank' rel='noopener noreferrer' className='text-primary uppercase'>
           Pixinvent
-        </Link>
+        </a>
       </p>
       {!isBreakpointReached && (
         <div className='flex items-center gap-4'>
-          <Link href='https://themeforest.net/licenses/standard' target='_blank' className='text-primary'>
+          <a href='https://themeforest.net/licenses/standard' target='_blank' rel='noopener noreferrer' className='text-primary'>
             License
-          </Link>
-          <Link href='https://themeforest.net/user/pixinvent/portfolio' target='_blank' className='text-primary'>
+          </a>
+          <a href='https://themeforest.net/user/pixinvent/portfolio' target='_blank' rel='noopener noreferrer' className='text-primary'>
             More Themes
-          </Link>
-          <Link
+          </a>
+          <a
             href='https://demos.pixinvent.com/materialize-nextjs-admin-template/documentation'
             target='_blank'
+            rel='noopener noreferrer'
             className='text-primary'
           >
             Documentation
-          </Link>
-          <Link href='https://pixinvent.ticksy.com' target='_blank' className='text-primary'>
+          </a>
+          <a href='https://pixinvent.ticksy.com' target='_blank' rel='noopener noreferrer' className='text-primary'>
             Support
-          </Link>
+          </a>
         </div>
       )}
     </div>

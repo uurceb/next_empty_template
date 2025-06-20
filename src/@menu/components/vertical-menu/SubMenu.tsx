@@ -11,8 +11,8 @@ import type {
   ReactNode
 } from 'react'
 
-// Next Imports
-import { usePathname } from 'next/navigation'
+// React Router Imports
+import { useLocation } from 'react-router-dom'
 
 // Third-party Imports
 import classnames from 'classnames'
@@ -148,7 +148,8 @@ const SubMenu: ForwardRefRenderFunction<HTMLLIElement, SubMenuProps> = (props, r
 
   // Hooks
   const id = useId()
-  const pathname = usePathname()
+  const location = useLocation()
+  const pathname = location.pathname
   const { isCollapsed, isPopoutWhenCollapsed, isHovered, isBreakpointReached } = useVerticalNav()
   const tree = useFloatingTree()
 

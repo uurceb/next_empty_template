@@ -6,7 +6,6 @@ import { useMemo } from 'react'
 // MUI Imports
 import { deepmerge } from '@mui/utils'
 import { ThemeProvider, lighten, darken, createTheme } from '@mui/material/styles'
-import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter'
 import CssBaseline from '@mui/material/CssBaseline'
 import type {} from '@mui/material/themeCssVarsAugmentation' //! Do not remove this import otherwise you will get type errors while making a production build
 import type {} from '@mui/lab/themeAugmentation' //! Do not remove this import otherwise you will get type errors while making a production build
@@ -93,27 +92,17 @@ const CustomThemeProvider = (props: Props) => {
   }, [settings.primaryColor, settings.skin, currentMode])
 
   return (
-    <AppRouterCacheProvider
-      options={{
-        prepend: true,
-        ...(direction === 'rtl' && {
-          key: 'rtl',
-          stylisPlugins: [stylisRTLPlugin]
-        })
-      }}
+    <ThemeProvider
+      theme={theme}
+      defaultMode={systemMode}
+      modeStorageKey={`${themeConfig.templateName.toLowerCase().split(' ').join('-')}-mui-template-mode`}
     >
-      <ThemeProvider
-        theme={theme}
-        defaultMode={systemMode}
-        modeStorageKey={`${themeConfig.templateName.toLowerCase().split(' ').join('-')}-mui-template-mode`}
-      >
-        <>
-          <ModeChanger systemMode={systemMode} />
-          <CssBaseline />
-          {children}
-        </>
-      </ThemeProvider>
-    </AppRouterCacheProvider>
+      <>
+        <ModeChanger systemMode={systemMode} />
+        <CssBaseline />
+        {children}
+      </>
+    </ThemeProvider>
   )
 }
 

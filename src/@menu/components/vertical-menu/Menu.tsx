@@ -4,8 +4,8 @@
 import { createContext, forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type { ForwardRefRenderFunction, MenuHTMLAttributes, MutableRefObject, ReactElement, ReactNode } from 'react'
 
-// Next Imports
-import { usePathname } from 'next/navigation'
+// React Router Imports
+import { useLocation } from 'react-router-dom'
 
 // Third-party Imports
 import classnames from 'classnames'
@@ -120,7 +120,8 @@ const Menu: ForwardRefRenderFunction<HTMLMenuElement, MenuProps> = (props, ref) 
   const openSubmenusRef = useRef<OpenSubmenu[]>([])
 
   // Hooks
-  const pathname = usePathname()
+  const location = useLocation()
+  const pathname = location.pathname
   const { updateVerticalNavState } = useVerticalNav()
 
   const toggleOpenSubmenu = useCallback(
