@@ -1,10 +1,10 @@
 'use client'
 
-// Next Imports
-import Link from 'next/link'
-
 // Third-party Imports
 import classnames from 'classnames'
+
+// Component Imports
+import Link from '@/components/Link'
 
 // Hook Imports
 import useVerticalNav from '@menu/hooks/useVerticalNav'
