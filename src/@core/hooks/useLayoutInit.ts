@@ -4,35 +4,26 @@
 import { useEffect } from 'react'
 
 // Hook Imports
-import { useCookie, useMedia } from 'react-use'
+import { useMedia } from 'react-use'
 
 // Type Imports
-import { useColorScheme } from '@mui/material'
-
 import { useSettings } from '@core/hooks/useSettings'
 
 const useLayoutInit = (colorSchemeFallback: 'light' | 'dark') => {
   // Hooks
-  const { settings } = useSettings()
-  const { setMode } = useColorScheme()
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [_, updateCookieColorPref] = useCookie('colorPref')
+  const { settings, updateSettings } = useSettings()
   const isDark = useMedia('(prefers-color-scheme: dark)', colorSchemeFallback === 'dark')
 
   useEffect(() => {
-    const appMode = isDark ? 'dark' : 'light'
-
-    updateCookieColorPref(appMode)
-
     if (settings.mode === 'system') {
-      // We need to change the mode in settings context to apply the mode change to MUI components
-      setMode(appMode)
+      // We need to update settings when system preference changes
+      const appMode = isDark ? 'dark' : 'light'
+      // Note: In React app, we don't need to set cookies, just update settings
+      updateSettings({ mode: appMode })
     }
+  }, [isDark, settings.mode, updateSettings])
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isDark])
-
-  // This hook does not return anything as it is only used to initialize color preference cookie and settings context on first load
+  // This hook does not return anything as it is only used to initialize settings on first load
 }
 
 export default useLayoutInit

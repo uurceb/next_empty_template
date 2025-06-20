@@ -1,19 +1,32 @@
 // React Imports
-import { useMemo } from 'react'
+import { useMemo, useCallback } from 'react'
 
-// Third-party Imports
-import { useCookie } from 'react-use'
+// Utils
+import { saveSettings } from '@/utils/settings'
 
 export const useObjectCookie = <T>(key: string, fallback?: T | null): [T, (newVal: T) => void] => {
-  // Hooks
-  const [valStr, updateCookie] = useCookie(key)
+  // Get value from localStorage
+  const value = useMemo<T>(() => {
+    try {
+      const stored = localStorage.getItem(key)
+      return stored ? JSON.parse(stored) : fallback
+    } catch (error) {
+      console.warn('Failed to parse stored value:', error)
+      return fallback
+    }
+  }, [key, fallback])
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const value = useMemo<T>(() => (valStr ? JSON.parse(valStr) : fallback), [valStr])
-
-  const updateValue = (newVal: T) => {
-    updateCookie(JSON.stringify(newVal))
-  }
+  const updateValue = useCallback((newVal: T) => {
+    try {
+      localStorage.setItem(key, JSON.stringify(newVal))
+      // If this is settings, also save using the settings utility
+      if (key.includes('settings') || key.includes('materialize')) {
+        saveSettings(newVal as any)
+      }
+    } catch (error) {
+      console.warn('Failed to save value:', error)
+    }
+  }, [key])
 
   return [value, updateValue]
 }

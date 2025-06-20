@@ -1,8 +1,8 @@
 // React Imports
 import { useRef } from 'react'
 
-// Next Imports
-import Link from 'next/link'
+// React Router Imports
+import { Link } from 'react-router-dom'
 
 // MUI Imports
 import { styled } from '@mui/material/styles'
@@ -70,7 +70,7 @@ const VerticalNavContent = ({ children }: ChildrenType) => {
   return (
     <>
       <NavHeader>
-        <Link href='/'>
+        <Link to='/'>
           <Logo />
         </Link>
         <NavCollapseIcons />

@@ -2,7 +2,7 @@
 
 // React Imports
 import type { ReactNode } from 'react'
-import { createContext, useMemo, useState } from 'react'
+import { createContext, useMemo, useState, useEffect } from 'react'
 
 // Type Imports
 import type { Mode, Skin, Layout, LayoutComponentWidth } from '@core/types'
@@ -11,8 +11,8 @@ import type { Mode, Skin, Layout, LayoutComponentWidth } from '@core/types'
 import themeConfig from '@configs/themeConfig'
 import primaryColorConfig from '@configs/primaryColorConfig'
 
-// Hook Imports
-import { useObjectCookie } from '@core/hooks/useObjectCookie'
+// Utils
+import { saveSettings } from '@/utils/settings'
 
 // Settings type
 export type Settings = {
@@ -68,15 +68,9 @@ export const SettingsProvider = (props: Props) => {
     mode: props.mode || themeConfig.mode
   }
 
-  // Cookies
-  const [settingsCookie, updateSettingsCookie] = useObjectCookie<Settings>(
-    themeConfig.settingsCookieName,
-    JSON.stringify(props.settingsCookie) !== '{}' ? props.settingsCookie : updatedInitialSettings
-  )
-
   // State
   const [_settingsState, _updateSettingsState] = useState<Settings>(
-    JSON.stringify(settingsCookie) !== '{}' ? settingsCookie : updatedInitialSettings
+    props.settingsCookie || updatedInitialSettings
   )
 
   const updateSettings = (settings: Partial<Settings>, options?: UpdateSettingsOptions) => {
@@ -85,8 +79,10 @@ export const SettingsProvider = (props: Props) => {
     _updateSettingsState(prev => {
       const newSettings = { ...prev, ...settings }
 
-      // Update cookie if needed
-      if (updateCookie) updateSettingsCookie(newSettings)
+      // Update localStorage if needed
+      if (updateCookie) {
+        saveSettings(newSettings)
+      }
 
       return newSettings
     })
@@ -94,7 +90,7 @@ export const SettingsProvider = (props: Props) => {
 
   /**
    * Updates the settings for page with the provided settings object.
-   * Updated settings won't be saved to cookie hence will be reverted once navigating away from the page.
+   * Updated settings won't be saved to localStorage hence will be reverted once navigating away from the page.
    *
    * @param settings - The partial settings object containing the properties to update.
    * @returns A function to reset the page settings.
@@ -108,7 +104,7 @@ export const SettingsProvider = (props: Props) => {
     updateSettings(settings, { updateCookie: false })
 
     // Returns a function to reset the page settings
-    return () => updateSettings(settingsCookie, { updateCookie: false })
+    return () => updateSettings(props.settingsCookie || updatedInitialSettings, { updateCookie: false })
   }
 
   const resetSettings = () => {
@@ -120,6 +116,11 @@ export const SettingsProvider = (props: Props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [_settingsState]
   )
+
+  // Sync settings to localStorage when they change
+  useEffect(() => {
+    saveSettings(_settingsState)
+  }, [_settingsState])
 
   return (
     <SettingsContext.Provider

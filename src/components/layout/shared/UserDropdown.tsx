@@ -4,8 +4,8 @@
 import { useRef, useState } from 'react'
 import type { MouseEvent } from 'react'
 
-// Next Imports
-import { useRouter } from 'next/navigation'
+// React Router Imports
+import { useNavigate } from 'react-router-dom'
 
 // MUI Imports
 import { styled } from '@mui/material/styles'
@@ -42,8 +42,7 @@ const UserDropdown = () => {
   const anchorRef = useRef<HTMLDivElement>(null)
 
   // Hooks
-  const router = useRouter()
-
+  const navigate = useNavigate()
   const { settings } = useSettings()
 
   const handleDropdownOpen = () => {
@@ -52,7 +51,7 @@ const UserDropdown = () => {
 
   const handleDropdownClose = (event?: MouseEvent<HTMLLIElement> | (MouseEvent | TouchEvent), url?: string) => {
     if (url) {
-      router.push(url)
+      navigate(url)
     }
 
     if (anchorRef.current && anchorRef.current.contains(event?.target as HTMLElement)) {
@@ -64,7 +63,7 @@ const UserDropdown = () => {
 
   const handleUserLogout = async () => {
     // Redirect to login page
-    router.push('/login')
+    navigate('/login')
   }
 
   return (

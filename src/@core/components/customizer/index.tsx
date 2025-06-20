@@ -2,10 +2,7 @@
 
 // React Imports
 import { useRef, useState } from 'react'
-
-// Next Imports
-import { usePathname } from 'next/navigation'
-import Link from 'next/link'
+import { useLocation } from 'react-router-dom'
 
 // MUI Imports
 import Chip from '@mui/material/Chip'
@@ -107,7 +104,7 @@ const Customizer = ({ breakpoint = 'lg', dir = 'ltr', disableDirection = false }
 
   // Hooks
   const theme = useTheme()
-  const pathName = usePathname()
+  const location = useLocation()
   const { settings, updateSettings, resetSettings, isSettingsChanged } = useSettings()
   const isSystemDark = useMedia('(prefers-color-scheme: dark)', false)
 
@@ -154,7 +151,7 @@ const Customizer = ({ breakpoint = 'lg', dir = 'ltr', disableDirection = false }
     if (field === 'direction') {
       setDirection(value as Direction)
     } else {
-      // Update settings in cookie
+      // Update settings
       updateSettings({ [field]: value })
     }
   }
@@ -445,36 +442,32 @@ const Customizer = ({ breakpoint = 'lg', dir = 'ltr', disableDirection = false }
                 <div className='flex flex-col gap-2'>
                   <p className='font-medium'>Direction</p>
                   <div className='flex items-center gap-4'>
-                    <Link href={getLocalePath(pathName, 'en')}>
-                      <div className='flex flex-col items-start gap-0.5'>
-                        <div
-                          className={classnames(styles.itemWrapper, {
-                            [styles.active]: direction === 'ltr'
-                          })}
-                        >
-                          <DirectionLtr />
-                        </div>
-                        <p className={styles.itemLabel}>
-                          Left to Right <br />
-                          (English)
-                        </p>
+                    <div className='flex flex-col items-start gap-0.5'>
+                      <div
+                        className={classnames(styles.itemWrapper, {
+                          [styles.active]: direction === 'ltr'
+                        })}
+                      >
+                        <DirectionLtr />
                       </div>
-                    </Link>
-                    <Link href={getLocalePath(pathName, 'ar')}>
-                      <div className='flex flex-col items-start gap-0.5'>
-                        <div
-                          className={classnames(styles.itemWrapper, {
-                            [styles.active]: direction === 'rtl'
-                          })}
-                        >
-                          <DirectionRtl />
-                        </div>
-                        <p className={styles.itemLabel}>
-                          Right to Left <br />
-                          (Arabic)
-                        </p>
+                      <p className={styles.itemLabel}>
+                        Left to Right <br />
+                        (English)
+                      </p>
+                    </div>
+                    <div className='flex flex-col items-start gap-0.5'>
+                      <div
+                        className={classnames(styles.itemWrapper, {
+                          [styles.active]: direction === 'rtl'
+                        })}
+                      >
+                        <DirectionRtl />
                       </div>
-                    </Link>
+                      <p className={styles.itemLabel}>
+                        Right to Left <br />
+                        (Arabic)
+                      </p>
+                    </div>
                   </div>
                 </div>
               )}

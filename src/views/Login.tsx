@@ -3,8 +3,8 @@
 // React Imports
 import { useState } from 'react'
 
-// Next Imports
-import { useRouter } from 'next/navigation'
+// React Router Imports
+import { useNavigate } from 'react-router-dom'
 
 // MUI Imports
 import Typography from '@mui/material/Typography'
@@ -46,7 +46,7 @@ const LoginV2 = ({ mode }: { mode: Mode }) => {
   const borderedLightIllustration = '/images/illustrations/auth/v2-login-light-border.png'
 
   // Hooks
-  const router = useRouter()
+  const navigate = useNavigate()
   const { settings } = useSettings()
   const authBackground = useImageVariant(mode, lightImg, darkImg)
 
@@ -80,7 +80,7 @@ const LoginV2 = ({ mode }: { mode: Mode }) => {
         <img src={authBackground} className='absolute bottom-[4%] z-[-1] is-full max-md:hidden' />
       </div>
       <div className='flex justify-center items-center bs-full bg-backgroundPaper !min-is-full p-6 md:!min-is-[unset] md:p-12 md:is-[480px]'>
-        <Link className='absolute block-start-5 sm:block-start-[38px] inline-start-6 sm:inline-start-[38px]'>
+        <Link className='absolute block-start-5 sm:block-start-[38px] inline-start-6 sm:inline-start-[38px]' to='/'>
           <Logo />
         </Link>
         <div className='flex flex-col gap-5 is-full sm:is-auto md:is-full sm:max-is-[400px] md:max-is-[unset] mbs-11 sm:mbs-14 md:mbs-0'>
@@ -93,7 +93,7 @@ const LoginV2 = ({ mode }: { mode: Mode }) => {
             autoComplete='off'
             onSubmit={e => {
               e.preventDefault()
-              router.push('/')
+              navigate('/')
             }}
             className='flex flex-col gap-5'
           >

@@ -1,27 +1,23 @@
-'use client'
-
-// React Imports
 import { forwardRef } from 'react'
 import type { ComponentProps, ForwardedRef, MouseEvent } from 'react'
+import { Link as RouterLink } from 'react-router-dom'
 
-// Next Imports
-import NextLink from 'next/link'
-
-type Props = Omit<ComponentProps<typeof NextLink>, 'href' | 'onClick'> & {
+type Props = Omit<ComponentProps<typeof RouterLink>, 'to' | 'onClick'> & {
   href?: string
+  to?: string
   onClick?: (event: MouseEvent<HTMLAnchorElement>) => void
 }
 
 const Link = (props: Props, ref: ForwardedRef<HTMLAnchorElement>) => {
-  // Props
-  const { href, onClick, ...rest } = props
+  const { href, to, onClick, ...rest } = props
+  const destination = to || href || '/'
 
   return (
-    <NextLink
+    <RouterLink
       ref={ref}
       {...rest}
-      href={href || '/'}
-      onClick={onClick ? e => onClick(e) : !href ? e => e.preventDefault() : undefined}
+      to={destination}
+      onClick={onClick ? e => onClick(e) : !destination ? e => e.preventDefault() : undefined}
     />
   )
 }

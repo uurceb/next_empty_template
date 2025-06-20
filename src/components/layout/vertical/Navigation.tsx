@@ -3,8 +3,8 @@
 // React Imports
 import { useEffect, useRef } from 'react'
 
-// Next Imports
-import Link from 'next/link'
+// React Router Imports
+import { Link } from 'react-router-dom'
 
 // MUI Imports
 import { styled, useColorScheme, useTheme } from '@mui/material/styles'
@@ -125,7 +125,7 @@ const Navigation = (props: Props) => {
     >
       {/* Nav Header including Logo & nav toggle icons  */}
       <NavHeader>
-        <Link href='/'>
+        <Link to='/'>
           <Logo />
         </Link>
         {!(isCollapsed && !isHovered) && (

@@ -1,7 +1,7 @@
 'use client'
 
-// Next Imports
-import Link from 'next/link'
+// React Router Imports
+import { Link } from 'react-router-dom'
 
 // MUI Imports
 import Button from '@mui/material/Button'
@@ -36,7 +36,7 @@ const NotFound = ({ mode }: { mode: Mode }) => {
           src='/images/illustrations/characters/3.png'
           className='object-cover bs-[400px] md:bs-[450px] lg:bs-[500px]'
         />
-        <Button href='/' component={Link} variant='contained'>
+        <Button component={Link} to='/' variant='contained'>
           Back to Home
         </Button>
       </div>

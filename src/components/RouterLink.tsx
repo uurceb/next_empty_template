@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import type { LinkProps } from 'react-router-dom'
 
 // Type Imports
-import type { ChildrenType } from '../types'
+import type { ChildrenType } from '@/@core/types'
 
 type RouterLinkProps = LinkProps & Partial<ChildrenType> & {
   className?: string
